@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <base href="/chat/">
+
+    <meta charset="utf-8">
+
+    <title>Chat</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+        <link type="text/css" rel="stylesheet" href="/css/style.css">
+    <!-- END CSS -->
+
+    <!--<link rel="icon" href="">-->
+</head>
+<body>
+    <!-- HEADER -->
+        <header>
+            <a href=''><div class="header-logo"></div></a>
+        </header>
+    <!-- END HEADER -->
+    
+    
+
+    <!-- SECTION -->
+        <section>
+            <div class="login-content">
+                <form class="login" action="#" method="POST">
+                    <input type="text" name="pseudo" id="pseudo" placeholder="Pseudo" autocomplete="off" />
+                    <input type="submit" value="Se connecter" id="login" />
+                </form>
+            </div>
+        </section>
+    <!-- END SECTION -->
+
+
+
+    <!-- JAVASCRIPT -->
+        <script src="/scripts/jquery/jquery-3.2.1.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+
+        <script>        
+            // Connexion au serveur
+            var socket = io.connect('http://localhost:8080');
+
+            // Validation pseudo
+			$(".login").submit(function(e){
+                e.preventDefault();
+                
+                socket.emit('login', $('#pseudo').val());
+            });
+            
+            // Autorisation de connexion
+            socket.on('loginReturn', function(loginReturn) {
+                if(loginReturn == 1)
+                    location.reload();
+            })
+        </script>
+    <!-- END JAVASCRIPT -->
+</body>
+</html>

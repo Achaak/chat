@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <base href="/chat/">
+
+    <meta charset="utf-8">
+
+    <title>Chat</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+        <link type="text/css" rel="stylesheet" href="/css/style.css">
+    <!-- END CSS -->
+
+    <!--<link rel="icon" href="">-->
+</head>
+<body>
+    <!-- HEADER -->
+        <header>
+            <a href=''><div class="header-logo"></div></a>
+            <div class="logout"></div>
+        </header>
+    <!-- END HEADER -->
+    
+    
+
+    <!-- SECTION -->
+        <section class='messages-module'>
+            <div class="messages-list">
+                <div class="content-message">
+                    <div class="message info">
+                        <span class="text">Vous êtes maintenant connecté !</span>
+                    </div>
+                </div>
+            </div>
+
+            <form class="send-message">
+                <input type="text" class="my-message" placeholder="Votre message..." />
+                <button type="submit" class="btn-send-message" value=""></button>
+            </form>
+        </section>
+    <!-- END SECTION -->
+
+
+
+    <!-- JAVASCRIPT -->
+        <script src="/scripts/jquery/jquery-3.2.1.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+    
+        <script>     
+            var socket = io.connect('http://localhost:8080');
+
+            $(document).ready(function(){
+                scrollbarBottom();
+
+                // Envoie de message
+                $(".send-message").submit(function(e){
+                    e.preventDefault();
+
+                    if($('.my-message').val() != '') {
+                        $('.messages-list').append(                    
+                            '<div class="content-message">' +
+                            '    <div class="message me">' +
+                            '        <span class="pseudo">Moi</span>' +
+                            '        <span class="text">' + $('.my-message').val() + '</span>' +
+                            '    </div>' +
+                            '</div>'
+                        );                    
+                        socket.emit('message', $('.my-message').val());
+                    
+                        // Reset du input
+                            $('.my-message').val("");
+                    
+                        scrollbarBottom();
+                    }
+                });
+
+                // Bouton de déconnexion
+                $('.logout').click(function(e){                    
+                    socket.emit('logout');
+                });
+            });
+
+
+            // Nouvelle connexion
+            socket.on('info', function(info) {
+                $('.messages-list').append(                    
+                    '<div class="content-message">' +
+                    '    <div class="message info">' +
+                    '        <span class="text">' + info.info + '</span>' +
+                    '    </div>' +
+                    '</div>'
+                );
+                
+                scrollbarBottom();
+            })
+
+
+            // Réception des messages
+            socket.on('message', function(message) {
+                $('.messages-list').append(                    
+                    '<div class="content-message">' +
+                    '    <div class="message other">' +
+                    '        <span class="pseudo">' + message.pseudo + '</span>' +
+                    '        <span class="text">' + message.message + '</span>' +
+                    '    </div>' +
+                    '</div>'
+                );
+                
+                scrollbarBottom();
+            })
+
+            
+            // Autorisation de déconnexion
+            socket.on('logoutReturn', function(logoutReturn) {
+                if(logoutReturn == 1)
+                    location.reload();
+            })
+
+
+            // Scrollbar des messages vers le bas
+            function scrollbarBottom() {
+                $(".messages-list").scrollTop($(".messages-list")[0].scrollHeight);
+            }
+        </script>
+    <!-- END JAVASCRIPT -->
+</body>
+</html>

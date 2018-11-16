@@ -1,0 +1,156 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body, html {
+	font-family: "Arial", "Helvetica", sans-serif !important; 
+	background: url("../pictures/background.svg") no-repeat center center fixed;
+	background-size: cover;
+}
+
+.bold { font-weight: bold; }
+
+
+/* HEADER */
+	header {
+		background-color: white;
+		display: flex;
+        justify-content: center;
+        border-bottom: 5px solid #F2F2F2;
+    }    
+
+        header .logout {
+            background: url(../pictures/logout.png) no-repeat center center;
+            background-size: 45px;
+            height: 45px;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 45px;
+            cursor: pointer;
+        }
+
+		.header-logo {
+			background: url("../pictures/logo.png") no-repeat center center;
+			background-size: 45px;
+			height: 45px;
+			width: 45px;
+			padding: 10px;
+		}
+/* END HEADER */
+
+
+
+/* CHAT */
+	.messages-module {
+		height: calc(100vh - 70px);
+    	position: relative;
+	}
+	
+	/* LIST MESSAGE */
+		.messages-list {
+			display: flex;
+			flex-direction: column;
+			height: calc(100vh - 70px - 20px - 80px);
+			overflow-y: auto;
+			padding: 10px;
+		}
+            .messages-list .message.me {
+                background-color: #3498db;
+            }
+            .messages-list .message.other {
+                background-color: #e67c32;
+            }
+            .messages-list .message.info {
+				background-color: #95A5A6;
+            }
+			.messages-list .message {
+				border-radius: 20px;
+				padding: 5px 15px 5px 15px;
+				margin-bottom: 5px;
+				width: auto;
+				display: inline-block;
+				color: white;
+
+			}
+				.messages-list .message .pseudo::after {
+					content: " :";
+				}
+				.messages-list .message .pseudo {
+					font-weight: bold;
+				}
+	/* END LIST MESSAGE*/
+
+
+	/* SEND MESSAGE */
+		.send-message {
+			display: flex;
+			justify-content: center;
+			position: absolute;
+			width: 100%;
+			bottom: 20px;
+		}
+			.send-message input[type='text'] {
+				max-width: 700px;
+				width: 65%;
+				display: block;
+				outline: none;
+				border: 1px solid grey;
+				border-radius: 30px;
+				padding: 10px 15px 10px 15px;
+				resize: none;
+				height: 28px;
+			}
+			.send-message .btn-send-message {
+				padding: 5px;
+				background: url("../pictures/send.png") no-repeat center center;
+				background-size: 23px;
+				background-color: #3498db;
+				width: 50px;
+				height: 50px;
+				border: none;
+				border-radius: 50%;
+				outline: none;
+				margin-left: 10px;
+			}
+	/* END SEND MESSAGE */
+/* END CHAT */
+
+
+
+/* LOGIN */
+    .login-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        bottom: 0;
+        top: 70px;
+        position: absolute;
+        width: 100%;
+    }
+        .login {
+            display: flex;
+            flex-direction: column; 
+            width: 200px;
+            padding: 30px;
+            margin: auto;
+            background-color: white;
+            text-align: center;
+            box-shadow: 0px 4px 8px 0px #888888;
+        }
+            .login input[type="text"] {
+                border: 2px solid #EBEBEB;
+                padding: 7px;
+                color: #393939;
+            }
+            .login input[type="submit"] {
+                border: none;
+                padding: 15px;
+                margin-top: 10px;
+                text-transform: uppercase;
+                font-weight: bold;
+                background-color: #EBEBEB;
+                color: #393939;
+            }
+/* END LOGIN*/
