@@ -13,7 +13,7 @@
         <link type="text/css" rel="stylesheet" href="/css/style.css">
     <!-- END CSS -->
 
-    <!--<link rel="icon" href="">-->
+    <link rel="icon" href="/pictures/logo.png">
 </head>
 <body>
     <!-- HEADER -->
@@ -43,20 +43,21 @@
 
         <script>        
             // Connexion au serveur
-            var socket = io.connect('http://localhost:8080');
+                var socket = io.connect('http://localhost:8080');
 
             // Validation pseudo
-			$(".login").submit(function(e){
-                e.preventDefault();
-                
-                socket.emit('login', $('#pseudo').val());
-            });
+                $(".login").submit(function(e){
+                    e.preventDefault();
+                    
+                    // Envoie du pseudo
+                    socket.emit('login', $('#pseudo').val());
+                });
             
             // Autorisation de connexion
-            socket.on('loginReturn', function(loginReturn) {
-                if(loginReturn == 1)
-                    location.reload();
-            })
+                socket.on('loginReturn', function(loginReturn) {
+                    if(loginReturn == 1)
+                        location.reload();
+                })
         </script>
     <!-- END JAVASCRIPT -->
 </body>

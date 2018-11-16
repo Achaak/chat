@@ -13,7 +13,7 @@
         <link type="text/css" rel="stylesheet" href="/css/style.css">
     <!-- END CSS -->
 
-    <!--<link rel="icon" href="">-->
+    <link rel="icon" href="/pictures/logo.png">
 </head>
 <body>
     <!-- HEADER -->
@@ -55,74 +55,74 @@
                 scrollbarBottom();
 
                 // Envoie de message
-                $(".send-message").submit(function(e){
-                    e.preventDefault();
+                    $(".send-message").submit(function(e){
+                        e.preventDefault();
 
-                    if($('.my-message').val() != '') {
-                        $('.messages-list').append(                    
-                            '<div class="content-message">' +
-                            '    <div class="message me">' +
-                            '        <span class="pseudo">Moi</span>' +
-                            '        <span class="text">' + $('.my-message').val() + '</span>' +
-                            '    </div>' +
-                            '</div>'
-                        );                    
-                        socket.emit('message', $('.my-message').val());
-                    
-                        // Reset du input
-                            $('.my-message').val("");
-                    
-                        scrollbarBottom();
-                    }
-                });
+                        if($('.my-message').val() != '') {
+                            $('.messages-list').append(                    
+                                '<div class="content-message">' +
+                                '    <div class="message me">' +
+                                '        <span class="pseudo">Moi</span>' +
+                                '        <span class="text">' + $('.my-message').val() + '</span>' +
+                                '    </div>' +
+                                '</div>'
+                            );                    
+                            socket.emit('message', $('.my-message').val());
+                        
+                            // Reset du input
+                                $('.my-message').val("");
+                        
+                            scrollbarBottom();
+                        }
+                    });
 
                 // Bouton de déconnexion
-                $('.logout').click(function(e){                    
-                    socket.emit('logout');
-                });
+                    $('.logout').click(function(e){                    
+                        socket.emit('logout');
+                    });
             });
 
 
             // Nouvelle connexion
-            socket.on('info', function(info) {
-                $('.messages-list').append(                    
-                    '<div class="content-message">' +
-                    '    <div class="message info">' +
-                    '        <span class="text">' + info.info + '</span>' +
-                    '    </div>' +
-                    '</div>'
-                );
-                
-                scrollbarBottom();
-            })
+                    socket.on('info', function(info) {
+                        $('.messages-list').append(                    
+                            '<div class="content-message">' +
+                            '    <div class="message info">' +
+                            '        <span class="text">' + info.info + '</span>' +
+                            '    </div>' +
+                            '</div>'
+                        );
+                        
+                        scrollbarBottom();
+                    })
 
 
             // Réception des messages
-            socket.on('message', function(message) {
-                $('.messages-list').append(                    
-                    '<div class="content-message">' +
-                    '    <div class="message other">' +
-                    '        <span class="pseudo">' + message.pseudo + '</span>' +
-                    '        <span class="text">' + message.message + '</span>' +
-                    '    </div>' +
-                    '</div>'
-                );
-                
-                scrollbarBottom();
-            })
+                socket.on('message', function(message) {
+                    $('.messages-list').append(                    
+                        '<div class="content-message">' +
+                        '    <div class="message other">' +
+                        '        <span class="pseudo">' + message.pseudo + '</span>' +
+                        '        <span class="text">' + message.message + '</span>' +
+                        '    </div>' +
+                        '</div>'
+                    );
+                    
+                    scrollbarBottom();
+                })
 
             
             // Autorisation de déconnexion
-            socket.on('logoutReturn', function(logoutReturn) {
-                if(logoutReturn == 1)
-                    location.reload();
-            })
+                socket.on('logoutReturn', function(logoutReturn) {
+                    if(logoutReturn == 1)
+                        location.reload();
+                })
 
 
             // Scrollbar des messages vers le bas
-            function scrollbarBottom() {
-                $(".messages-list").scrollTop($(".messages-list")[0].scrollHeight);
-            }
+                function scrollbarBottom() {
+                    $(".messages-list").scrollTop($(".messages-list")[0].scrollHeight);
+                }
         </script>
     <!-- END JAVASCRIPT -->
 </body>

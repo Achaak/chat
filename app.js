@@ -23,8 +23,8 @@ var io = require('socket.io').listen(server);
 
 
 
-    io.sockets.on('connection', function (socket) {
-        // Connexion par pseudo avec session
+io.sockets.on('connection', function (socket) {
+    // Connexion par pseudo avec session
         socket.on("login", function(pseudo) {
             if(pseudo != '') {
                 socket.handshake.session.pseudo = pseudo;
@@ -34,10 +34,10 @@ var io = require('socket.io').listen(server);
             }
 
             // Verif ok
-            socket.emit('loginReturn', 1);
+                socket.emit('loginReturn', 1);
         });
 
-        
+    // Gestion de la deconnexion
         socket.on("logout", function() {
             if (socket.handshake.session.pseudo) {
                 socket.broadcast.emit('info', {'info': '<span class="bold">' + socket.handshake.session.pseudo + '</span> vient de quitter le chat !'});
@@ -46,16 +46,16 @@ var io = require('socket.io').listen(server);
                 socket.handshake.session.save();
                 
                 // Verif ok
-                socket.emit('logoutReturn', 1);
+                    ocket.emit('logoutReturn', 1);
             }
         });
 
-        
-        // Reception d'un message puis envoie au autres
+    
+    // Reception d'un message puis envoie au autres
         socket.on('message', function (message) {            
             socket.broadcast.emit('message', {'pseudo': socket.handshake.session.pseudo, 'message': ent.encode(message)});
         }); 
-    });
+});
 
 
 // Chargement des pages
@@ -70,4 +70,5 @@ var io = require('socket.io').listen(server);
         res.redirect('/chat');
     });
 
+    
 server.listen(8080);
